@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripciones - Centro de Idiomas UNMSM</title>
+    <style>
+        /* --- VARIABLES DE COLOR --- */
+        :root { --primary: #144791; --primary-dark: #0a2542; --secondary: #F48B19; }
+
+        /* --- 1. LAYOUT GENERAL --- */
+        body { margin: 0; padding: 0; font-family: 'Roboto', 'Segoe UI', sans-serif; }
+        .unmsm-landing-wrapper {
+            position: relative; display: flex; width: 100%; 
+            min-height: 100vh; height: auto; 
+            background-image: 
+                linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.1) 100%),
+                url('img/fondo.png'); 
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            padding: 150px 5% 100px 5% !important; 
+            box-sizing: border-box; align-items: center; justify-content: center; 
+            gap: 100px; overflow-x: hidden;
+        }
+
+        /* --- 2. SISTEMA DE PARTÍCULAS --- */
+        .particulas-animadas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; margin: 0; padding: 0; z-index: 0; pointer-events: none; }
+        .particulas-animadas li { position: absolute; display: block; list-style: none; }
+        @keyframes flujoAscendenteRot { from { transform: translateY(110vh) rotate(0deg); } to { transform: translateY(-20vh) rotate(720deg); } }
+        .p-1 { width: 45px; left: 10%; animation: flujoAscendenteRot 35s linear infinite; }
+        .p-2 { width: 35px; left: 85%; animation: flujoAscendenteRot 28s linear infinite; }
+
+        /* --- 3. TEXTOS --- */
+        .unmsm-col-texto { flex: 1; max-width: 650px; z-index: 2; color: #ffffff; }
+        .texto-titulo { font-size: clamp(40px, 4.5vw, 45px); font-weight: 900; line-height: 1.1; margin: 0 0 20px 0; text-shadow: 2px 4px 15px rgba(0,0,0,0.6); }
+        .texto-subtitulo { font-size: clamp(18px, 2vw, 30px); font-weight: 500; padding-left: 18px; border-left: 6px solid var(--secondary); color: #f8fafc; }
+
+        /* --- 4. FORMULARIO --- */
+        .unmsm-col-form { flex: none; display: flex; justify-content: center; max-width: 480px; width: 100%; z-index: 2; }
+        .tarjeta-blanca-unmsm { background-color: transparent; border-radius: 20px; box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.4); width: 100%; overflow: hidden; }
+        .form-header-unmsm { background-color: #144791; display: flex; justify-content: space-between; align-items: center; padding: 35px 40px; border-bottom: 4px solid var(--secondary); }
+        .fh-titulo { color: #ffffff; font-size: 24px; font-weight: 900; text-transform: uppercase; margin: 0; }
+        .fh-logo { max-width: 120px; height: auto; }
+        .form-body-unmsm { background-color: #ffffff; padding: 30px 40px; }
+
+        /* --- 5. ESTILOS INTERNOS FORM --- */
+        .f-fila { margin-bottom: 20px; width: 100%; position: relative; }
+        .f-gap { display: flex; gap: 15px; }
+        .f-col { flex: 1; }
+        
+        .unmsm-premium-form input:not([type="submit"]):not([type="checkbox"]), 
+        .unmsm-premium-form select { 
+            width: 100%; height: 45px; padding: 5px 12px; border: 1.5px solid #e2e8f0; border-radius: 10px; 
+            background-color: #f8fafc; font-size: 14px; color: #334155; box-sizing: border-box; transition: all 0.3s;
+        }
+        .unmsm-premium-form input:focus, .unmsm-premium-form select:focus { border-color: var(--primary); outline: none; background-color: #fff; box-shadow: 0 0 0 4px rgba(20, 71, 145, 0.1); }
+        
+        /* Franja con flecha (::after) */
+        .form-separador {
+            background-color: var(--primary); color: #ffffff; font-size: 12px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center;
+            justify-content: center; width: 100%; height: 38px; margin: 10px 0 20px 0; border-radius: 8px;
+        }
+        .form-separador::after { content: "▼"; font-size: 10px; margin-left: 10px; opacity: 0.8; }
+
+        .unmsm-premium-form input[type="submit"] { 
+            width: 100%; background: linear-gradient(135deg, var(--secondary) 0%, #d97715 100%); 
+            color: #ffffff; padding: 16px; border: none; border-radius: 10px; font-weight: 700; 
+            cursor: pointer; text-transform: uppercase; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 139, 25, 0.3);
+        }
+        .unmsm-premium-form input[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244, 139, 25, 0.4); }
+
+        .f-disclaimer { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: #64748b; cursor: pointer; }
+
+        /* --- 6. MÓVIL --- */
+        @media (max-width: 991px) {
+            .unmsm-landing-wrapper { display: block; padding: 0 !important; background: #f4f7f6; }
+            .unmsm-col-texto { padding: 100px 25px 60px 25px; background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('img/fondo.png'); background-size: cover; }
+            .unmsm-col-form { margin-top: -40px; padding: 0 20px 50px 20px; max-width: 100%; }
+            .f-gap { flex-direction: column; gap: 20px; }
+            .fh-titulo { font-size: 20px; }
+            .unmsm-premium-form input:not([type="submit"]):not([type="checkbox"]), .unmsm-premium-form select { height: 52px; font-size: 15px; }
+        }
+
+        .btn-cargando { background: #94a3b8 !important; cursor: wait !important; opacity: 0.8; animation: latidoEnvio 1s infinite alternate !important; }
+        @keyframes latidoEnvio { from { opacity: 0.7; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+<div class="unmsm-landing-wrapper">
+    <ul class="particulas-animadas">
+        <li class="p-1"><img src="img/ceidlogo.png" width="45"></li>
+        <li class="p-2"><img src="img/ceidlogo.png" width="35"></li>
+    </ul>
+
+    <div class="unmsm-col-texto">
+        <h1 class="texto-titulo">Preparación para el Examen de Suficiencia en Idiomas</h1>
+        <p class="texto-subtitulo">Enfoque académico para la acreditación del dominio en inglés y portugués</p>
+    </div>
+
+    <div class="unmsm-col-form">
+        <div class="tarjeta-blanca-unmsm">
+            <div class="form-header-unmsm">
+                <h2 class="fh-titulo">¡ESTAMOS<br>LISTOS PARA <br>AYUDARTE!</h2>
+                <img src="img/ceidlogo.png" alt="Logo" class="fh-logo">
+            </div>
+
+            <div class="form-body-unmsm">
+                <form id="form-registro" class="unmsm-premium-form">
+                    
+                    <!-- 1. DATOS DEL ESTUDIANTE -->
+                    <div class="f-fila">
+                        <div class="form-separador">Datos del Estudiante</div>
+                    </div>
+                    <div class="f-fila">
+                        <input type="text" name="estudiante" placeholder="Nombres y Apellidos Completos" required>
+                    </div>
+                    <div class="f-fila f-gap">
+                        <div class="f-col"><input type="text" name="dni" placeholder="DNI" maxlength="8" required></div>
+                        <div class="f-col"><input type="tel" name="celular" placeholder="Celular" required></div>
+                    </div>
+                    <div class="f-fila">
+                        <input type="email" name="correo" placeholder="Correo Electrónico" required>
+                    </div>
+
+                    <!-- 2. DATOS DEL CURSO -->
+                    <div class="f-fila">
+                        <div class="form-separador">Datos del Curso</div>
+                    </div>
+                    <div class="f-fila f-gap">
+                        <div class="f-col">
+                            <select name="idioma" required>
+                                <option value="" disabled selected>Selecciona el Idioma</option>
+                                <option value="Inglés">Inglés</option>
+                                <option value="Portugués">Portugués</option>
+                            </select>
+                        </div>
+                        <div class="f-col">
+                            <select name="nivel" required>
+                                <option value="" disabled selected>Selecciona el Nivel</option>
+                                <option value="Básico A2">Básico A2</option>
+                                <option value="Intermedio B2">Intermedio B2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="f-fila">
+                        <select name="horario" required>
+                            <option value="" disabled selected>Selecciona el Horario</option>
+                            <option value="Lun, Mié 19:00 - 23:00">Lun, Mié 19:00 - 23:00</option>
+                            <option value="Mar, Jue 18:00 - 22:00">Mar, Jue 18:00 - 22:00</option>
+                            <option value="Sáb, Dom 14:00 - 18:00">Sáb, Dom 14:00 - 18:00</option>
+                            <option value="Vié 18:00-22:00, Sáb 14:00-18:00">Vié 18:00-22:00, Sáb 14:00-18:00</option>
+                        </select>
+                    </div>
+
+                    <div class="f-fila">
+                        <label class="f-disclaimer">
+                            <input type="checkbox" name="terminos" value="Aceptado" required> 
+                            <span>Solicito información y autorizo el tratamiento de mis datos personales.</span>
+                        </label>
+                    </div>
+
+                    <div class="f-fila">
+                        <input type="submit" id="btn-enviar" value="Inscribirme Ahora">
+                    </div>
+                </form>
+
+                <div id="pantalla-exito" style="display: none; text-align: center; padding: 40px 0;">
+                    <div style="font-size: 70px; color: #F48B19; margin-bottom: 20px;">✓</div>
+                    <h2 style="color: #144791; font-size: 24px;">¡Registro Exitoso!</h2>
+                    <p style="color: #64748b;">Tus datos han sido enviados correctamente.</p>
+                    <button onclick="location.reload()" style="margin-top: 20px; background: #144791; color: #fff; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold;">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // TU URL DE APPS SCRIPT (Puedes usar la original que tenías antes de meter los archivos)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyt2-JrO0ZNsSMEnasNTOs2xtU0fFwaq5AUXx8QLN5l5LOtsbn3I41N4Ry9R670T1HQig/exec'; 
+    const form = document.getElementById('form-registro');
+    const btnEnviar = document.getElementById('btn-enviar');
+    const pantallaExito = document.getElementById('pantalla-exito');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // Efecto visual de carga
+        btnEnviar.value = 'ENVIANDO... ⏳';
+        btnEnviar.classList.add('btn-cargando');
+        btnEnviar.disabled = true;
+
+        // Se envía de la forma simple (FormData) ya que no hay archivos
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                form.style.display = 'none';
+                pantallaExito.style.display = 'block';
+            })
+            .catch(error => {
+                alert('Hubo un error al enviar los datos. Intenta nuevamente.');
+                console.error('Error!', error.message);
+                btnEnviar.value = 'Inscribirme Ahora';
+                btnEnviar.classList.remove('btn-cargando');
+                btnEnviar.disabled = false;
+            });
+    });
+</script>
+
+</body>
+</html>
